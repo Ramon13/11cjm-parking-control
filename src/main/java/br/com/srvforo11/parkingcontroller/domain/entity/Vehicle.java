@@ -12,12 +12,23 @@ public class Vehicle {
 	
 	@Column(name = "registration_plate", nullable = false)
 	private String registrationPlate;
-
-	private Vehicle(Builder builder) {
-		this.name = builder.name;
-		this.registrationPlate = builder.registrationPlate;
-	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getRegistrationPlate() {
+		return registrationPlate;
+	}
+
+	public void setRegistrationPlate(String registrationPlate) {
+		this.registrationPlate = registrationPlate;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, registrationPlate);
@@ -38,29 +49,5 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		return "Vehicle [name=" + name + ", registrationPlate=" + registrationPlate + "]";
-	}
-
-	public static Builder newBuilder() {
-		return new Builder();
-	}
-	
-	public static final class Builder{
-		
-		private String name;
-		private String registrationPlate;
-		
-		public Builder name(String name) {
-			this.name = name;
-			return this;
-		}
-		
-		public Builder registrationPlate(String registrationPlate) {
-			this.registrationPlate = registrationPlate;
-			return this;
-		}
-		
-		public Vehicle build() {
-			return new Vehicle(this);
-		}
 	}
 }

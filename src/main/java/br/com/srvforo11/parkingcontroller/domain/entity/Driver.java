@@ -9,11 +9,15 @@ public class Driver {
 
 	@Column(name = "driver_name", nullable = false)
 	private String name;
-
-	private Driver(Builder builder) {
-		this.name = builder.name;
-	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
@@ -34,23 +38,5 @@ public class Driver {
 	@Override
 	public String toString() {
 		return "Driver [name=" + name + "]";
-	}
-	
-	public static Builder newBuilder() {
-		return new Builder();
-	}
-	
-	public static final class Builder{
-		
-		private String name;
-		
-		public Builder name(String name) {
-			this.name = name;
-			return this;
-		}
-		
-		public Driver build() {
-			return new Driver(this);
-		}
 	}
 }

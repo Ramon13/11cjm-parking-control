@@ -9,14 +9,13 @@ public class Guard {
 	
 	@Column(name = "guard_name", nullable = false)
 	private String name;
-
-	private Guard(Builder builder) {
-		this.name = builder.name;
-	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -33,24 +32,6 @@ public class Guard {
 
 	@Override
 	public String toString() {
-		return "Driver [name=" + name + "]";
-	}
-
-	public static Builder newBuilder() {
-		return new Builder();
-	}
-	
-	public static final class Builder{
-		
-		private String name;
-		
-		public Builder name(String name) {
-			this.name = name;
-			return this;
-		}
-		
-		public Guard build() {
-			return new Guard(this);
-		}
+		return "Guard [name=" + name + "]";
 	}
 }
