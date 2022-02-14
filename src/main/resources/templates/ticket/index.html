@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/global.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/modal.css}"/>
+  </head>
+  <body>
+    <header>
+      <div id="titleBar"></div>
+    </header>
+    
+    <div id="newTicketModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="newParkingDeparture">
+          <h1>Nova saída de veículo</h1>
+          <hr />
+          <form id="saveTicketForm" method="post" th:action="@{/ticket/save}" th:object="${parkingTicket}">
+            <p>Vigilante</p>
+            <input type="text" placeholder="nome do vigilante..." th:field="*{guard.name}"/>
+            <p>Motorista</p>
+            <input type="text" placeholder="nome do motorista..." th:field="*{driver.name}"/>
+            <p>Veículo</p>
+            <input type="text" placeholder="nome do veículo..." th:field="*{vehicle.name}"/>
+            <p>Placa</p>
+            <input type="text" placeholder="placa do veículo..." th:field="*{vehicle.registrationPlate}"/>
+            <button type="button" id="saveTicket">Salvar</button>
+          </form>
+          
+          <br /><br />
+        </div>
+      </div>
+    </div>
+    
+    <div id="content">
+      <div id="newTicket">
+        <div>
+          <button id="newTicketBtn">
+            <img src="../images/plus.svg"/>
+          </button>
+        </div>
+      </div>
+    
+      <div th:each="ticket : ${tickets}" class="parking-record" th:classappend="${ticket.ticketStatus}">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p th:text="${ticket.guard.name}"></p>
+            </div>
+            <div class="ticket-start">
+              <p th:text="${ticket.printDepartureTime}"></p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p th:text="${ticket.driver.name}"></p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p th:text="${ticket.vehicleInfo}"></p>
+            <p class="timer" th:if="${ticket.endAt == null}" th:attr="data-ticketstart=${ticket.startAt}"></p>
+            <p th:if="${ticket.endAt != null}" th:text="${ticket.printEntranceTime}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      const parkingRecords = document.querySelectorAll("div.openTicket");
+      for (let i = 0; i < parkingRecords.length; i++){
+    	  let timer = parkingRecords[i].querySelector("p.timer");
+    	  
+    	  const start = new Date(timer.dataset.ticketstart);      // the ticket start date
+    	  
+    	  setInterval(function(){
+    		    let delta = Math.floor((Date.now() - start) / 1000);
+    		    let ss = delta % 60;
+    		    let mm = Math.floor(delta/60) % 60;
+    		    let hh = Math.floor(delta/60/60) % 60;
+    		    timer.textContent = 
+    		    	((hh < 10) ? "0" + hh : hh) 
+    		    	+ ":" + 
+    		    	((mm < 10) ? "0" + mm : mm) 
+    		    	+ ":" + 
+    		    	((ss < 10) ? "0" + ss : ss);
+    	  }, 1000);
+      }
+      
+      const modal = document.querySelector("div#newTicketModal");
+      
+      const closeModal = document.querySelectorAll("span.close")[0];
+      
+      const btn = document.querySelector("#newTicketBtn");
+      btn.onclick = function(){
+    	  modal.style.display = "block";  
+      }
+      
+      closeModal.onclick = function(){
+    	  modal.style.display = "none";
+      }
+      
+      window.onclick = function(event){
+    	  if (event.target == modal)
+    		  modal.style.display = "none";	  
+      }
+      
+      const saveTicketForm = document.querySelector("form#saveTicketForm");
+      const saveTicketBtn = document.querySelector("button#saveTicket");
+      saveTicketBtn.onclick = function(){
+    	  saveNewTicket(saveTicketForm);
+    	}
+      
+      function saveNewTicket(ticketForm){
+    	  let formData = new FormData(ticketForm);
+    	  let httpRequest = new XMLHttpRequest();
+    	  
+    	  if (!httpRequest){
+    		  alert('Giving up :( Cannot create an XMLHTTP instance');
+  	      return false;
+    	  }
+    		
+    	  httpRequest.onreadystatechange = function(){ticketResponse(httpRequest)};
+    	  httpRequest.open(ticketForm.method, ticketForm.action);
+    	  httpRequest.send(formData);
+      }
+      
+      function ticketResponse(httpRequest){
+    	  if (httpRequest.readyState === XMLHttpRequest.DONE) {
+  	      if (httpRequest.status === 201) {
+  	        console.log("ticket criado");
+  	        location.reload();
+  	      } else {
+  	        console.log('There was a problem with the request.');
+  	      }
+  	    }
+      }
+    </script>
+  </body>
+</html> 
+
+

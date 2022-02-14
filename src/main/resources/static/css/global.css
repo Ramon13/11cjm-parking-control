@@ -42,11 +42,11 @@ div.parking-record{
   position: relative;
 }
 
-div.open-ticket{
+div.openTicket{
 	background-color: #D2EEDA;
 }
 
-div.closed-ticket{
+div.closedTicket{
   background-color: #DBE0EC;
 }
 
