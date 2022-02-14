@@ -1,15 +1,15 @@
 package br.com.srvforo11.parkingcontroller.domain.entity;
 
-import br.com.srvforo11.parkingcontroller.util.DateUtils;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,13 +20,16 @@ public class ParkingTicket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name = "driver_cpf", nullable = false)
 	private Driver driver;
 	
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name = "guard_cpf", nullable = false)
 	private Guard guard;
 	
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name = "vehicle_plate", nullable = false)
 	private Vehicle vehicle;
 	
 	@Column(name = "start_at", nullable = false)
@@ -34,25 +37,7 @@ public class ParkingTicket {
 	
 	@Column(name = "end_at")
 	private OffsetDateTime endAt;
-	
-	public ParkingTicket(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
-	        OffsetDateTime endAt) {
-		this.id = id;
-		this.driver = driver;
-		this.guard = guard;
-		this.vehicle = vehicle;
-		this.startAt = startAt;
-		this.endAt = endAt;
-	}
-	
-	public ParkingTicket() {}
-	
-	@PrePersist
-	private void prePersist() {
-		if (Objects.isNull(startAt))
-			startAt = DateUtils.now();
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -103,7 +88,7 @@ public class ParkingTicket {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, startAt);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -115,11 +100,12 @@ public class ParkingTicket {
 		if (getClass() != obj.getClass())
 			return false;
 		ParkingTicket other = (ParkingTicket) obj;
-		return Objects.equals(id, other.id) && Objects.equals(startAt, other.startAt);
+		return Objects.equals(id, other.id);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ParkingTicket [id=" + id + ", startAt=" + startAt + ", endAt=" + endAt + "]";
+		return "ParkingTicket [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
+				+ ", startAt=" + startAt + ", endAt=" + endAt + "]";
 	}
 }

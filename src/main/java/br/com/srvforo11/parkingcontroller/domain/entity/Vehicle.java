@@ -1,25 +1,25 @@
 package br.com.srvforo11.parkingcontroller.domain.entity;
 
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
-@Embeddable
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "vehicle")
 public class Vehicle {
 
-	@Column(name = "vehicle_name", nullable = false)
-	private String name;
-	
-	@Column(name = "registration_plate", nullable = false)
+	@Id
+	@Column(name = "registration_plate", nullable = false, unique = true)
 	private String registrationPlate;
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	@Column(name = "manufacturer", nullable = false)
+	private String manufacturer;
+	
+	@Column(name = "description", nullable = false)
+	private String description;
 
 	public String getRegistrationPlate() {
 		return registrationPlate;
@@ -29,9 +29,25 @@ public class Vehicle {
 		this.registrationPlate = registrationPlate;
 	}
 
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, registrationPlate);
+		return Objects.hash(registrationPlate);
 	}
 
 	@Override
@@ -43,11 +59,12 @@ public class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
-		return Objects.equals(name, other.name) && Objects.equals(registrationPlate, other.registrationPlate);
+		return Objects.equals(registrationPlate, other.registrationPlate);
 	}
 
 	@Override
 	public String toString() {
-		return "Vehicle [name=" + name + ", registrationPlate=" + registrationPlate + "]";
+		return "Vehicle [registrationPlate=" + registrationPlate + ", manufacturer=" + manufacturer + ", description="
+				+ description + "]";
 	}
 }
