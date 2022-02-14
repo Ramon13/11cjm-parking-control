@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="../css/global.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/modal.css"/>
+  </head>
+  <body>
+    <header>
+      <div id="titleBar"></div>
+    </header>
+    
+    <div id="newTicketModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="newParkingDeparture">
+          <h1>Nova saída de veículo</h1>
+          <hr />
+          <form>
+            <p>Vigilante</p>
+            <input type="text" placeholder="nome do vigilante..."/>
+            <p>Motorista</p>
+            <input type="text" placeholder="nome do motorista..."/>
+            <p>Veículo</p>
+            <input type="text" placeholder="nome do veículo..."/>
+            <p>Placa</p>
+            <input type="text" placeholder="placa do veículo..."/>
+            <button id="saveTicket">Salvar</button>
+          </form>
+          
+          <br /><br />
+        </div>
+      </div>
+    </div>
+    
+    <div id="content">
+      <div id="newTicket">
+        <div>
+          <button id="newTicketBtn">
+            <img src="../images/plus.svg"/>
+          </button>
+        </div>
+      </div>
+    
+      <div class="parking-record open-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p class="timer" data-ticketstart="February 13, 2022 19:00:00"></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record open-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Driver Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p class="timer" data-ticketstart="February 13, 2022 19:10:00"></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record closed-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p>Chegada em: dd/mm/yyyy hh:MM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record closed-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p>Chegada em: dd/mm/yyyy hh:MM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record closed-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p>Chegada em: dd/mm/yyyy hh:MM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record closed-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p>Chegada em: dd/mm/yyyy hh:MM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="parking-record closed-ticket">
+        <div class="record-head">
+          <div class="guard-info">
+            <div class="guard-icon">
+              <img src="../images/guard.png"/>
+            </div>
+            <div class="guard-name">
+              <p>Guard Name Named</p>
+            </div>
+            <div class="ticket-start">
+              <p>Saída em dd/mm/yyyy hh:MM</p>
+            </div>
+          </div>
+          <br />
+          <div class="driver-info">
+            <div class="driver-icon">
+              <img src="../images/driver.png"/>
+            </div>
+            <div class="driver-name">
+              <p>Guard Name Named</p>
+            </div>
+          </div>
+        </div>
+        <div class="record-body">
+          <div class="ticket-content">
+            <p>Car name [XRDDD-999]</p>
+            <p>Chegada em: dd/mm/yyyy hh:MM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      const parkingRecords = document.querySelectorAll("div.open-ticket");
+      for (let i = 0; i < parkingRecords.length; i++){
+    	  let timer = parkingRecords[i].querySelector("p.timer");
+    	  const start = new Date(timer.dataset.ticketstart);      // the ticket start date
+    	  
+    	  setInterval(function(){
+    		    let delta = Math.floor((Date.now() - start) / 1000);
+    		    let ss = delta % 60;
+    		    let mm = Math.floor(delta/60) % 60;
+    		    let hh = Math.floor(delta/60/60) % 60;
+    		    timer.textContent = 
+    		    	((hh < 10) ? "0" + hh : hh) 
+    		    	+ ":" + 
+    		    	((mm < 10) ? "0" + mm : mm) 
+    		    	+ ":" + 
+    		    	((ss < 10) ? "0" + ss : ss);
+    	  }, 1000);
+      }
+      
+      const modal = document.querySelector("div#newTicketModal");
+      
+      const closeModal = document.querySelectorAll("span.close")[0];
+      
+      const btn = document.querySelector("#newTicketBtn");
+      btn.onclick = function(){
+    	  modal.style.display = "block";  
+      }
+      
+      closeModal.onclick = function(){
+    	  modal.style.display = "none";
+      }
+      
+      window.onclick = function(event){
+    	  if (event.target == modal)
+    		  modal.style.display = "none";	  
+      }
+    </script>
+  </body>
+</html> 
+

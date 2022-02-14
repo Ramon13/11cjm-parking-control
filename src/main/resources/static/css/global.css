@@ -1,0 +1,121 @@
+@font-face {
+  font-family: Roboto;
+  src: url('Roboto-Regular.ttf') format('truetype');
+}
+
+body{
+	width: 60%;
+	margin: auto;
+	font-family: "Roboto", sans-serif;
+}
+
+input[type=text]{
+	font-family: "Roboto", sans-serif;
+	width: 100%;
+	padding: 6px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	background-color: #fff;
+}
+
+button{
+	padding: 5px;
+	border-radius: 4px;
+}
+
+div#titleBar {
+  padding: 20px;
+  background-color: #1A88FF;
+}
+
+div.parking-record{
+  margin: auto;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: 0.3s;
+  box-shadow: 0px 3px 6px 3px #ddd;
+  height: 100px;
+  text-align: center;
+  position: relative;
+}
+
+div.open-ticket{
+	background-color: #D2EEDA;
+}
+
+div.closed-ticket{
+  background-color: #DBE0EC;
+}
+
+div.parking-record .record-head{
+	width: 30%;
+	float: left;
+	position: relative;
+}
+
+div.parking-record .record-body{
+	width: 60%;
+  float: right;
+  position: relative;
+  top: 40%; 
+}
+
+div.parking-record .record-head img{
+	width: 32px;
+	float: left;
+}
+
+div.parking-record .record-head p{
+	margin: 0;
+	width: 300px;
+}
+
+div.parking-record .ticket-start p{
+	color: #606060;
+	font-size: 14px;
+}
+
+div.parking-record .record-body div.ticket-content p{
+  margin: 0;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+div.parking-record .record-head div.ticket-info p{
+	color: #606060;
+}
+
+div#newTicket{
+	height: 70px;
+	text-align: center;
+	position: relative;
+}
+
+div#newTicket button{
+	position: absolute;
+	top: 30%;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #606060;
+	border-radius: 50%;
+}
+
+div#newTicket button:hover {
+	background-color: #eee; 
+}
+
+div#newParkingDeparture form{
+	text-align: center;
+	width: 30%;
+	margin: auto;
+}
+
+button#saveTicket{
+	color: #ffffff;
+	background-color: #2EA44F;
+	font-family: "Roboto", sans-serif;
+	float: right;
+}

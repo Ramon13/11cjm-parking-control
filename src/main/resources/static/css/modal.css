@@ -1,0 +1,43 @@
+div.modal{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+div.modal-content{
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+}
+
+span.close{
+	color: #aaaaaa;
+	float: right;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+span.close:hover,
+span.close:focus{
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+h1{
+	font-family: "Roboto", sans-serif;
+	color: #4e4848;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+}
