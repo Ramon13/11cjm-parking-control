@@ -53,14 +53,22 @@ div.closedTicket{
 div.parking-record .record-head{
 	width: 30%;
 	float: left;
+	display: inline-block;
 	position: relative;
 }
 
 div.parking-record .record-body{
-	width: 60%;
-  float: right;
+  width: 50%;
+  display: inline-block;
   position: relative;
   top: 40%; 
+}
+
+div.parking-record .record-option{
+  float: right;
+  display: inline-block;
+  position: relative;
+  top: 30%; 
 }
 
 div.parking-record .record-head img{
@@ -73,7 +81,7 @@ div.parking-record .record-head p{
 	width: 300px;
 }
 
-div.parking-record .ticket-start p{
+div.parking-record .time-content p{
 	color: #606060;
 	font-size: 14px;
 }
@@ -105,6 +113,7 @@ div#newTicket button{
 
 div#newTicket button:hover {
 	background-color: #eee; 
+	cursor: pointer;
 }
 
 div#newParkingDeparture form{
@@ -118,4 +127,15 @@ button#saveTicket{
 	background-color: #2EA44F;
 	font-family: "Roboto", sans-serif;
 	float: right;
+}
+
+button.close-ticket {
+	border: 1px solid #b3c9b9;
+	background-color: #D2EEDA;
+	border-radius: 50%;
+}
+
+button.close-ticket:hover{
+	cursor: pointer;
+    background-color: #b3c9b9 	
 }

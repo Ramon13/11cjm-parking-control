@@ -1,12 +1,13 @@
 package br.com.srvforo11.parkingcontroller.mapper;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.Objects;
+
 import br.com.srvforo11.parkingcontroller.domain.entity.Driver;
 import br.com.srvforo11.parkingcontroller.domain.entity.Guard;
 import br.com.srvforo11.parkingcontroller.domain.entity.Vehicle;
 import br.com.srvforo11.parkingcontroller.util.DateUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.OffsetDateTime;
-import java.util.Objects;
 
 public class ParkingTicketDTO {
 
@@ -91,23 +92,23 @@ public class ParkingTicketDTO {
 		        + ", startAt=" + startAt + ", endAt=" + endAt + "]";
 	}
 	
-	@JsonIgnore
 	public String getTicketStatus() {
 		return Objects.isNull(endAt) ? OPEN_TICKET : CLOSED_TICKET;
 	}
 	
-	@JsonIgnore
 	public String getPrintDepartureTime() {
 		return String.format("Saída em: %s", DateUtils.toDefaultFormat(startAt));
 	}
 	
-	@JsonIgnore
 	public String getPrintEntranceTime() {
 		return String.format("Chegada em: %s", DateUtils.toDefaultFormat(endAt));
 	}
 	
-	@JsonIgnore
 	public String getVehicleInfo() {
 		return String.format("%s [%s]", vehicle.getName(), vehicle.getRegistrationPlate());
+	}
+	
+	public String getTicketDuration() {
+		return String.format("Duração: %d minutos", Duration.between(startAt, endAt).toMinutes());
 	}
 }

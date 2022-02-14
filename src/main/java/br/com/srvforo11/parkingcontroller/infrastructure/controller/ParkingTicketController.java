@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/ticket")
@@ -28,9 +29,16 @@ public class ParkingTicketController {
 		return "ticket/index";
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/save")
 	public ResponseEntity save(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO) {
 		parkingTicketService.save(parkingTicketDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@PostMapping("/close")
+	public String close(@RequestParam("ticketId") Long id) {
+		parkingTicketService.closeTicket(id);
+		return "redirect:/ticket/list";
 	}
 }

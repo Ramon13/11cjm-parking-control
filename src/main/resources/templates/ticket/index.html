@@ -39,7 +39,7 @@
       <div id="newTicket">
         <div>
           <button id="newTicketBtn">
-            <img src="../images/plus.svg"/>
+            <img th:src="@{/images/plus.svg}"/>
           </button>
         </div>
       </div>
@@ -53,7 +53,7 @@
             <div class="guard-name">
               <p th:text="${ticket.guard.name}"></p>
             </div>
-            <div class="ticket-start">
+            <div class="ticket-start time-content">
               <p th:text="${ticket.printDepartureTime}"></p>
             </div>
           </div>
@@ -71,8 +71,18 @@
           <div class="ticket-content">
             <p th:text="${ticket.vehicleInfo}"></p>
             <p class="timer" th:if="${ticket.endAt == null}" th:attr="data-ticketstart=${ticket.startAt}"></p>
-            <p th:if="${ticket.endAt != null}" th:text="${ticket.printEntranceTime}"></p>
+            <br/>
+            <div th:if="${ticket.endAt != null}" class="time-content">
+            <p th:text="${ticket.printEntranceTime}"></p>
+            <p th:text="${ticket.ticketDuration}"></p>
+            </div>
           </div>
+        </div>
+        <div class="record-option" th:if="${ticket.endAt == null}">
+          <button class="close-ticket" title="finalizar registro" 
+            th:attr="data-url=@{/ticket/close(ticketId=${ticket.id})}">
+            <img th:src="@{/images/check.svg}"/>
+          </button>
         </div>
       </div>
     </div>
@@ -98,8 +108,16 @@
     	  }, 1000);
       }
       
-      const modal = document.querySelector("div#newTicketModal");
       
+      const closeTicketBtns = document.querySelectorAll("button.close-ticket");
+      for (let i = 0;i < closeTicketBtns.length; i++){
+    	  closeTicketBtns[i].onclick = function(){
+    		  closeTicket(this.dataset.url);
+    	  }
+      }
+      
+      
+      const modal = document.querySelector("div#newTicketModal");
       const closeModal = document.querySelectorAll("span.close")[0];
       
       const btn = document.querySelector("#newTicketBtn");
@@ -119,8 +137,8 @@
       const saveTicketForm = document.querySelector("form#saveTicketForm");
       const saveTicketBtn = document.querySelector("button#saveTicket");
       saveTicketBtn.onclick = function(){
-    	  saveNewTicket(saveTicketForm);
-    	}
+  	    saveNewTicket(saveTicketForm);
+  	  }
       
       function saveNewTicket(ticketForm){
     	  let formData = new FormData(ticketForm);
@@ -145,6 +163,15 @@
   	        console.log('There was a problem with the request.');
   	      }
   	    }
+      }
+      
+      function closeTicket(url){
+    	  let form = document.createElement("form");
+    	  form.method = "POST";
+    	  form.action = url;
+    	  document.querySelector("body").append(form);
+    	  
+    	  form.submit();
       }
     </script>
   </body>

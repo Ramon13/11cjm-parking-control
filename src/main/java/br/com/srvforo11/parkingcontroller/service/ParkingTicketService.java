@@ -4,6 +4,8 @@ import br.com.srvforo11.parkingcontroller.domain.entity.ParkingTicket;
 import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
 import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
 import br.com.srvforo11.parkingcontroller.repository.ParkingTicketRepository;
+import br.com.srvforo11.parkingcontroller.util.DateUtils;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -29,5 +31,9 @@ public class ParkingTicketService {
 	public void save(ParkingTicketDTO parkingTicketDTO) {
 		ParkingTicket parkingTicket = EntityMapper.fromDTOToEntity(parkingTicketDTO);
 		parkingTicketRepository.save(parkingTicket);
+	}
+	
+	public void closeTicket(Long ticketId) {
+		parkingTicketRepository.closeTicket(DateUtils.now(), ticketId);
 	}
 }
