@@ -105,7 +105,7 @@ public class ParkingTicketDTO {
 	}
 	
 	public String getVehicleInfo() {
-		return String.format("%s [%s]", vehicle.getName(), vehicle.getRegistrationPlate());
+		return String.format("%s [%s]", vehicle.getDescription(), vehicle.getRegistrationPlate());
 	}
 	
 	public String getTicketDuration() {

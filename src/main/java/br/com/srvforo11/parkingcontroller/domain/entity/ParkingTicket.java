@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import br.com.srvforo11.parkingcontroller.util.DateUtils;
 
 @Entity
 @Table(name = "parking_ticket")
@@ -25,7 +28,7 @@ public class ParkingTicket {
 	private Driver driver;
 	
 	@ManyToOne
-	@JoinColumn(name = "guard_cpf", nullable = false)
+	@JoinColumn(name = "guard_id", nullable = false)
 	private Guard guard;
 	
 	@ManyToOne
@@ -37,7 +40,27 @@ public class ParkingTicket {
 	
 	@Column(name = "end_at")
 	private OffsetDateTime endAt;
+	
+	public ParkingTicket(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
+			OffsetDateTime endAt) {
+		this.id = id;
+		this.driver = driver;
+		this.guard = guard;
+		this.vehicle = vehicle;
+		this.startAt = startAt;
+		this.endAt = endAt;
+	}
 
+	public ParkingTicket() {}
+	
+	@PrePersist
+	public void prePersist() {
+		if (Objects.isNull(id)) {
+			startAt = DateUtils.now();
+			endAt = null;
+		}
+	}
+	
 	public Long getId() {
 		return id;
 	}

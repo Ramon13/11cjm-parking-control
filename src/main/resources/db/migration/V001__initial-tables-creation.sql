@@ -7,12 +7,14 @@ CREATE TABLE IF NOT EXISTS `driver`(
 
 
 CREATE TABLE IF NOT EXISTS `guard`(
+ `id`                      BIGINT NOT NULL UNIQUE,
  `cpf`                     VARCHAR(11) NOT NULL UNIQUE,
  `name`                    VARCHAR(64) NOT NULL,
  `username`                VARCHAR(20) NOT NULL UNIQUE,
  `password`                VARCHAR(255) NOT NULL,
+ `reset_credentials`       TINYINT DEFAULT 1,
  
-  PRIMARY KEY(`cpf`)
+  PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4;
 
 
@@ -30,11 +32,11 @@ CREATE TABLE  `parking_ticket`(
   `start_at`              DATETIME(3) NOT NULL,
   `end_at`                DATETIME(3) NULL,
   `driver_cpf`            VARCHAR(11) NOT NULL,
-  `guard_cpf`             VARCHAR(11) NOT NULL,
+  `guard_id`              BIGINT NOT NULL,
   `vehicle_plate`         VARCHAR(7) NOT NULL,
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_PARKINGTICKET_DRIVER` FOREIGN KEY (`driver_cpf`) REFERENCES `driver` (`cpf`),
-  CONSTRAINT `FK_PARKINGTICKET_GUARD` FOREIGN KEY (`guard_cpf`) REFERENCES `guard` (`cpf`),
+  CONSTRAINT `FK_PARKINGTICKET_GUARD` FOREIGN KEY (`guard_id`) REFERENCES `guard` (`id`),
   CONSTRAINT `FK_PARKINGTICKET_VEHICLE` FOREIGN KEY (`vehicle_plate`) REFERENCES `vehicle` (`registration_plate`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4;

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/global.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/modal.css}"/>
+    <style>
+        button#login{
+            float: none;
+            text-align: center;
+        }
+        
+        input{
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="titleBar"></div>
+    </header>
+    
+    <div id='content'>
+      <form method="POST" th:action="@{/auth/redefine}" th:object="${user}">
+          <div class="error">
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+          </div>
+          <br/>
+          <p>Nova Senha</p>
+          <input id='password' type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'error' : ''"/>
+          
+          <p>Confirmar Nova Senha</p>
+          <input id="confirm" type="password"/>
+          
+          <button type="button" id="login">Entrar</button>
+        </form>
+    </div>
+    
+    <script>
+      const loginBtn = document.querySelector("button#login");
+      const form = document.querySelector("form");
+      const pass = document.querySelector("input#password");
+      const confirmPass = document.querySelector("input#confirm");
+      const divError = document.querySelector("div.error");
+      
+      loginBtn.onclick = function(){
+    	if (!(pass.value === confirmPass.value)){
+    		let span = document.createElement("span");
+    		span.textContent = "Senhas diferentes."
+    		divError.innerHTML = '';
+    		divError.append(span);
+    		return;
+    	}
+    	
+    	form.submit();
+      };
+    </script>
+  </body>
+</html>

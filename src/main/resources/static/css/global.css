@@ -9,7 +9,7 @@ body{
 	font-family: "Roboto", sans-serif;
 }
 
-input[type=text]{
+input[type=text], input[type=password], select{
 	font-family: "Roboto", sans-serif;
 	width: 100%;
 	padding: 6px;
@@ -116,13 +116,13 @@ div#newTicket button:hover {
 	cursor: pointer;
 }
 
-div#newParkingDeparture form{
+form{
 	text-align: center;
-	width: 30%;
+	width: 35%;
 	margin: auto;
 }
 
-button#saveTicket{
+button#saveTicket, button#login{
 	color: #ffffff;
 	background-color: #2EA44F;
 	font-family: "Roboto", sans-serif;
@@ -138,4 +138,12 @@ button.close-ticket {
 button.close-ticket:hover{
 	cursor: pointer;
     background-color: #b3c9b9 	
+}
+
+div.error{
+	color: red;
+}
+
+input.error{
+	border: 1px solid red;
 }

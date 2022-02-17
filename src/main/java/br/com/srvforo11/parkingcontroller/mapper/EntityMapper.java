@@ -1,6 +1,7 @@
 package br.com.srvforo11.parkingcontroller.mapper;
 
 import br.com.srvforo11.parkingcontroller.domain.entity.ParkingTicket;
+import br.com.srvforo11.parkingcontroller.domain.entity.Vehicle;
 
 public final class EntityMapper {
 
@@ -24,5 +25,9 @@ public final class EntityMapper {
 				parkingTicketDTO.getVehicle(),
 				parkingTicketDTO.getStartAt(),
 				parkingTicketDTO.getEndAt());
+	}
+	
+	public static VehicleDTO fromEntityToDTO(Vehicle vehicle) {
+		return new VehicleDTO(vehicle.getRegistrationPlate(), vehicle.getManufacturer(), vehicle.getDescription());
 	}
 }

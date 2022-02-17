@@ -4,14 +4,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "guard")
 public class Guard extends User{
 	
-	@Id
 	@Column(name = "cpf", nullable = false, unique = true)
 	private String cpf;
 	
@@ -36,14 +34,17 @@ public class Guard extends User{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(cpf);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -53,7 +54,7 @@ public class Guard extends User{
 
 	@Override
 	public String toString() {
-		return "Guard [cpf=" + cpf + ", name=" + name + ", getUsername()=" + getUsername() + ", getPassword()="
-				+ getPassword() + "]";
+		return "Guard [cpf=" + cpf + ", name=" + name + ", id=" + id + ", username=" + username + ", password="
+				+ password + "]";
 	}
 }

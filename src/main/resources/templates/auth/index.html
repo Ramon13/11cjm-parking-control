@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/global.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/modal.css}"/>
+    <style>
+        button#login{
+            float: none;
+            text-align: center;
+        }
+        
+        input{
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="titleBar"></div>
+    </header>
+    
+    <div id='content'>
+      <form method="POST" th:action="@{/auth/login}" th:object="${user}">
+          <div th:if="${#fields.hasErrors('username')}">
+            <span class="error" th:errors="*{username}"></span>
+          </div>
+          <p>Usuário</p>
+          <input type="text" th:field="*{username}" th:classappend="${#fields.hasErrors('username')} ? 'error' : ''"/>
+          <p>Senha</p>
+          <input type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('username')} ? 'error' : ''"/>
+          
+          <button type="submit" id="login">Entrar</button>
+        </form>
+    </div>
+  </body>
+</html>

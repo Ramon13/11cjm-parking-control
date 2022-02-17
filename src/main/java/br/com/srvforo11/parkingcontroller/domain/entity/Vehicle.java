@@ -21,6 +21,15 @@ public class Vehicle {
 	@Column(name = "description", nullable = false)
 	private String description;
 
+	public Vehicle(String registrationPlate, String manufacturer, String description) {
+		this.registrationPlate = registrationPlate;
+		this.manufacturer = manufacturer;
+		this.description = description;
+	}
+	
+	public Vehicle() {}
+	
+	
 	public String getRegistrationPlate() {
 		return registrationPlate;
 	}

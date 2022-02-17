@@ -19,14 +19,17 @@
           <h1>Nova saída de veículo</h1>
           <hr />
           <form id="saveTicketForm" method="post" th:action="@{/ticket/save}" th:object="${parkingTicket}">
-            <p>Vigilante</p>
-            <input type="text" placeholder="nome do vigilante..." th:field="*{guard.name}"/>
             <p>Motorista</p>
-            <input type="text" placeholder="nome do motorista..." th:field="*{driver.name}"/>
+            <select th:field="*{driver}">
+              <option th:each="driver : ${drivers}" th:text="${driver.name}" th:value="${driver.cpf}"></option>    
+            </select>
             <p>Veículo</p>
-            <input type="text" placeholder="nome do veículo..." th:field="*{vehicle.name}"/>
-            <p>Placa</p>
-            <input type="text" placeholder="placa do veículo..." th:field="*{vehicle.registrationPlate}"/>
+            <select th:field="*{vehicle}">
+              <option th:each="vehicle : ${vehicles}" th:text="${vehicle.vehicleInfo}" th:value="${vehicle.registrationPlate}"></option>    
+            </select>
+            <p>Quilometragem (km)</p>
+            <input type="text" placeholder="quilometragem atual do veículo..." th:field="*{vehicle.description}"/>
+            
             <button type="button" id="saveTicket">Salvar</button>
           </form>
           
