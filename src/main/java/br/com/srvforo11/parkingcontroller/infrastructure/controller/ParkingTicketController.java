@@ -1,12 +1,8 @@
 package br.com.srvforo11.parkingcontroller.infrastructure.controller;
 
-import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
-import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
-import br.com.srvforo11.parkingcontroller.service.DriverService;
-import br.com.srvforo11.parkingcontroller.service.ParkingTicketService;
-import br.com.srvforo11.parkingcontroller.service.VehicleService;
-
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import br.com.srvforo11.parkingcontroller.domain.entity.User;
+import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
+import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
+import br.com.srvforo11.parkingcontroller.service.DriverService;
+import br.com.srvforo11.parkingcontroller.service.ParkingTicketService;
+import br.com.srvforo11.parkingcontroller.service.VehicleService;
 
 @Controller
 @RequestMapping("/ticket")
@@ -45,8 +48,10 @@ public class ParkingTicketController {
 	
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/save")
-	public ResponseEntity save(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO) {
-		parkingTicketService.save(parkingTicketDTO);
+	public ResponseEntity save(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO, HttpSession session) {
+		User user = (User) session.getAttribute("loggedUser");
+		
+		parkingTicketService.save(parkingTicketDTO, user.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	

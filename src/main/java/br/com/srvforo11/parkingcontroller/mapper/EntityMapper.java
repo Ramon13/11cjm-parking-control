@@ -14,7 +14,8 @@ public final class EntityMapper {
 				parkingTicket.getGuard(),
 				parkingTicket.getVehicle(),
 				parkingTicket.getStartAt(),
-				parkingTicket.getEndAt());
+				parkingTicket.getEndAt(),
+				parkingTicket.getVehicleMileage());
 	}
 	
 	public static ParkingTicket fromDTOToEntity(ParkingTicketDTO parkingTicketDTO) {
@@ -24,7 +25,8 @@ public final class EntityMapper {
 				parkingTicketDTO.getGuard(),
 				parkingTicketDTO.getVehicle(),
 				parkingTicketDTO.getStartAt(),
-				parkingTicketDTO.getEndAt());
+				parkingTicketDTO.getEndAt(),
+				parkingTicketDTO.getVehicleMileage());
 	}
 	
 	public static VehicleDTO fromEntityToDTO(Vehicle vehicle) {

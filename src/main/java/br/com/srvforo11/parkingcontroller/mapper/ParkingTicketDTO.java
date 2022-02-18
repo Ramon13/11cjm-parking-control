@@ -26,16 +26,21 @@ public class ParkingTicketDTO {
 	
 	private OffsetDateTime endAt;
 	
-	public ParkingTicketDTO() {}
+	private Integer vehicleMileage;
 	
+	private Integer distance;
+	
+	public ParkingTicketDTO() {}
+
 	public ParkingTicketDTO(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
-	        OffsetDateTime endAt) {
+			OffsetDateTime endAt,  Integer vehicleMileage) {
 		this.id = id;
 		this.driver = driver;
 		this.guard = guard;
 		this.vehicle = vehicle;
 		this.startAt = startAt;
 		this.endAt = endAt;
+		this.vehicleMileage = vehicleMileage;
 	}
 
 	public Long getId() {
@@ -85,13 +90,15 @@ public class ParkingTicketDTO {
 	public void setEndAt(OffsetDateTime endAt) {
 		this.endAt = endAt;
 	}
-
-	@Override
-	public String toString() {
-		return "ParkingTicketDTO [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
-		        + ", startAt=" + startAt + ", endAt=" + endAt + "]";
-	}
 	
+	public Integer getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Integer distance) {
+		this.distance = distance;
+	}
+
 	public String getTicketStatus() {
 		return Objects.isNull(endAt) ? OPEN_TICKET : CLOSED_TICKET;
 	}
@@ -111,4 +118,22 @@ public class ParkingTicketDTO {
 	public String getTicketDuration() {
 		return String.format("Duração: %d minutos", Duration.between(startAt, endAt).toMinutes());
 	}
+	
+	public String getDriveDistance() {
+		return String.format("Distância: %s Km", Objects.isNull(distance) ? "---" : String.valueOf(distance));
+	}
+
+	public Integer getVehicleMileage() {
+		return vehicleMileage;
+	}
+
+	public void setVehicleMileage(Integer vehicleMileage) {
+		this.vehicleMileage = vehicleMileage;
+	}
+
+	@Override
+	public String toString() {
+		return "ParkingTicketDTO [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
+				+ ", startAt=" + startAt + ", endAt=" + endAt + ", distance=" + distance + "]";
+	}	
 }

@@ -41,14 +41,18 @@ public class ParkingTicket {
 	@Column(name = "end_at")
 	private OffsetDateTime endAt;
 	
+	@Column(name = "vehicle_mileage", nullable = false)
+	private Integer vehicleMileage;
+	
 	public ParkingTicket(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
-			OffsetDateTime endAt) {
+			OffsetDateTime endAt, Integer vehicleMileage) {
 		this.id = id;
 		this.driver = driver;
 		this.guard = guard;
 		this.vehicle = vehicle;
 		this.startAt = startAt;
 		this.endAt = endAt;
+		this.vehicleMileage = vehicleMileage;
 	}
 
 	public ParkingTicket() {}
@@ -109,6 +113,14 @@ public class ParkingTicket {
 		this.endAt = endAt;
 	}
 
+	public Integer getVehicleMileage() {
+		return vehicleMileage;
+	}
+
+	public void setVehicleMileage(Integer vehicleMileage) {
+		this.vehicleMileage = vehicleMileage;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -129,6 +141,6 @@ public class ParkingTicket {
 	@Override
 	public String toString() {
 		return "ParkingTicket [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
-				+ ", startAt=" + startAt + ", endAt=" + endAt + "]";
+				+ ", startAt=" + startAt + ", endAt=" + endAt + ", vehicleMileage=" + vehicleMileage + "]";
 	}
 }

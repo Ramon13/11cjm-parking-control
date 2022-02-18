@@ -6,10 +6,19 @@
     <meta charset="UTF-8">
     <link type="text/css" rel="stylesheet" th:href="@{/css/global.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/css/modal.css}"/>
+    
+    <style type="text/css">
+        a#logout{
+            color: #fff;
+            float: right;
+        }
+    </style>
   </head>
   <body>
     <header>
-      <div id="titleBar"></div>
+      <div id="titleBar">
+        <a id="logout" th:href="@{/auth/logoff}">Sair</a>
+      </div>
     </header>
     
     <div id="newTicketModal" class="modal">
@@ -24,11 +33,11 @@
               <option th:each="driver : ${drivers}" th:text="${driver.name}" th:value="${driver.cpf}"></option>    
             </select>
             <p>Veículo</p>
-            <select th:field="*{vehicle}">
+            <select th:name="vehicle.registrationPlate">
               <option th:each="vehicle : ${vehicles}" th:text="${vehicle.vehicleInfo}" th:value="${vehicle.registrationPlate}"></option>    
             </select>
             <p>Quilometragem (km)</p>
-            <input type="text" placeholder="quilometragem atual do veículo..." th:field="*{vehicle.description}"/>
+            <input type="text" placeholder="quilometragem atual do veículo..." th:field="*{vehicleMileage}"/>
             
             <button type="button" id="saveTicket">Salvar</button>
           </form>
@@ -76,8 +85,9 @@
             <p class="timer" th:if="${ticket.endAt == null}" th:attr="data-ticketstart=${ticket.startAt}"></p>
             <br/>
             <div th:if="${ticket.endAt != null}" class="time-content">
-            <p th:text="${ticket.printEntranceTime}"></p>
-            <p th:text="${ticket.ticketDuration}"></p>
+              <p th:text="${ticket.printEntranceTime}"></p>
+              <p th:text="${ticket.ticketDuration}"></p>
+              <p th:text="${ticket.driveDistance}"></p>
             </div>
           </div>
         </div>

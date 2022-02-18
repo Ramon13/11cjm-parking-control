@@ -27,8 +27,9 @@ button{
 }
 
 div#titleBar {
-  padding: 20px;
+  padding: 10px;
   background-color: #1A88FF;
+  display: flow-root;
 }
 
 div.parking-record{

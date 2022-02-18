@@ -15,4 +15,9 @@ public class UserNotFoundException extends Exception{
 	public UserNotFoundException(Throwable cause) {
 		super(cause);
 	}
+
+	public UserNotFoundException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

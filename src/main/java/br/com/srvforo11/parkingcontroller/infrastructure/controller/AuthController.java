@@ -48,6 +48,12 @@ public class AuthController {
 		return "auth/index";
 	}
 	
+	@GetMapping("/logoff")
+	public String logoff(HttpSession session) {
+		session.removeAttribute("loggedUser");
+		return "redirect:/auth/login";
+	}
+	
 	@GetMapping("/redefine")
 	public String redefinePasswordHome(Model model) {
 		model.addAttribute("user", new User());
@@ -55,11 +61,14 @@ public class AuthController {
 	}
 	
 	@PostMapping("/redefine")
-	public String redefinePassword(@Valid @ModelAttribute("user") User user, Errors errors, Model model, HttpSession session) {
-		User loggedUser = (User) session.getAttribute("loggedUser");
+	public String redefinePassword(@Valid @ModelAttribute("user") User user, Errors errors, Model model, HttpSession session) 
+			throws UserNotFoundException { 
 		try {
-			authService.redefinePassword(loggedUser.getId(), user.getPassword());
-			session.removeAttribute("loggedUser");
+			User loggedUser = (User) session.getAttribute("loggedUser");
+			
+			loggedUser = authService.redefinePassword(loggedUser.getUsername(), user.getPassword());
+			session.setAttribute("loggedUser", loggedUser);
+			
 			return "redirect:/ticket/list";
 		} catch (InvalidPasswordException e) {
 			errors.rejectValue("password", null, "A senha deve conter 6 ou mais caracteres");
