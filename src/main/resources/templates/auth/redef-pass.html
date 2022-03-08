@@ -24,6 +24,8 @@
     </header>
     
     <div id='content'>
+      <h1>Redefinição de senha</h1>
+      <hr />
       <form method="POST" th:action="@{/auth/redefine}" th:object="${user}">
           <div class="error">
             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
@@ -35,7 +37,7 @@
           <p>Confirmar Nova Senha</p>
           <input id="confirm" type="password"/>
           
-          <button type="button" id="login">Entrar</button>
+          <button type="button" id="login">Enviar</button>
         </form>
     </div>
     

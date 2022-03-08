@@ -18,7 +18,9 @@ public class ParkingTicketDTO {
 	
 	private Driver driver;
 	
-	private Guard guard;
+	private Guard openedBy;
+	
+	private Guard closedBy;
 	
 	private Vehicle vehicle;
 	
@@ -31,16 +33,18 @@ public class ParkingTicketDTO {
 	private Integer distance;
 	
 	public ParkingTicketDTO() {}
-
-	public ParkingTicketDTO(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
-			OffsetDateTime endAt,  Integer vehicleMileage) {
+	
+	public ParkingTicketDTO(Long id, Driver driver, Guard openedBy, Guard closedBy, Vehicle vehicle,
+			OffsetDateTime startAt, OffsetDateTime endAt, Integer vehicleMileage, Integer distance) {
 		this.id = id;
 		this.driver = driver;
-		this.guard = guard;
+		this.openedBy = openedBy;
+		this.closedBy = closedBy;
 		this.vehicle = vehicle;
 		this.startAt = startAt;
 		this.endAt = endAt;
 		this.vehicleMileage = vehicleMileage;
+		this.distance = distance;
 	}
 
 	public Long getId() {
@@ -59,12 +63,20 @@ public class ParkingTicketDTO {
 		this.driver = driver;
 	}
 
-	public Guard getGuard() {
-		return guard;
+	public Guard getOpenedBy() {
+		return openedBy;
 	}
 
-	public void setGuard(Guard guard) {
-		this.guard = guard;
+	public void setOpenedBy(Guard openBy) {
+		this.openedBy = openBy;
+	}
+
+	public Guard getClosedBy() {
+		return closedBy;
+	}
+
+	public void setClosedBy(Guard closedBy) {
+		this.closedBy = closedBy;
 	}
 
 	public Vehicle getVehicle() {
@@ -99,6 +111,10 @@ public class ParkingTicketDTO {
 		this.distance = distance;
 	}
 
+	public String getPrettyPrintTicketId() {
+		return String.format("#%03d", id);
+	}
+	
 	public String getTicketStatus() {
 		return Objects.isNull(endAt) ? OPEN_TICKET : CLOSED_TICKET;
 	}
@@ -113,6 +129,10 @@ public class ParkingTicketDTO {
 	
 	public String getVehicleInfo() {
 		return String.format("%s [%s]", vehicle.getDescription(), vehicle.getRegistrationPlate());
+	}
+	
+	public String printVehicleMileage() {
+		return String.format("%s Km", vehicleMileage);
 	}
 	
 	public String getTicketDuration() {
@@ -133,7 +153,8 @@ public class ParkingTicketDTO {
 
 	@Override
 	public String toString() {
-		return "ParkingTicketDTO [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
-				+ ", startAt=" + startAt + ", endAt=" + endAt + ", distance=" + distance + "]";
+		return "ParkingTicketDTO [id=" + id + ", driver=" + driver + ", openBy=" + openedBy + ", closedBy=" + closedBy
+				+ ", vehicle=" + vehicle + ", startAt=" + startAt + ", endAt=" + endAt + ", vehicleMileage="
+				+ vehicleMileage + ", distance=" + distance + "]";
 	}	
 }

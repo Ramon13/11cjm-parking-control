@@ -28,8 +28,12 @@ public class ParkingTicket {
 	private Driver driver;
 	
 	@ManyToOne
-	@JoinColumn(name = "guard_id", nullable = false)
-	private Guard guard;
+	@JoinColumn(name = "opened_guard_id", nullable = false)
+	private Guard openedBy;
+	
+	@ManyToOne
+	@JoinColumn(name = "closed_guard_id", nullable = true)
+	private Guard closedBy;
 	
 	@ManyToOne
 	@JoinColumn(name = "vehicle_plate", nullable = false)
@@ -44,11 +48,12 @@ public class ParkingTicket {
 	@Column(name = "vehicle_mileage", nullable = false)
 	private Integer vehicleMileage;
 	
-	public ParkingTicket(Long id, Driver driver, Guard guard, Vehicle vehicle, OffsetDateTime startAt,
-			OffsetDateTime endAt, Integer vehicleMileage) {
+	public ParkingTicket(Long id, Driver driver, Guard openedBy, Guard closedBy, Vehicle vehicle,
+			OffsetDateTime startAt, OffsetDateTime endAt, Integer vehicleMileage) {
 		this.id = id;
 		this.driver = driver;
-		this.guard = guard;
+		this.openedBy = openedBy;
+		this.closedBy = closedBy;
 		this.vehicle = vehicle;
 		this.startAt = startAt;
 		this.endAt = endAt;
@@ -81,12 +86,20 @@ public class ParkingTicket {
 		this.driver = driver;
 	}
 
-	public Guard getGuard() {
-		return guard;
+	public Guard getOpenedBy() {
+		return openedBy;
 	}
 
-	public void setGuard(Guard guard) {
-		this.guard = guard;
+	public void setOpenedBy(Guard openedBy) {
+		this.openedBy = openedBy;
+	}
+
+	public Guard getClosedBy() {
+		return closedBy;
+	}
+
+	public void setClosedBy(Guard closedBy) {
+		this.closedBy = closedBy;
 	}
 
 	public Vehicle getVehicle() {
@@ -140,7 +153,8 @@ public class ParkingTicket {
 
 	@Override
 	public String toString() {
-		return "ParkingTicket [id=" + id + ", driver=" + driver + ", guard=" + guard + ", vehicle=" + vehicle
-				+ ", startAt=" + startAt + ", endAt=" + endAt + ", vehicleMileage=" + vehicleMileage + "]";
+		return "ParkingTicket [id=" + id + ", driver=" + driver + ", openedBy=" + openedBy + ", closedBy=" + closedBy
+				+ ", vehicle=" + vehicle + ", startAt=" + startAt + ", endAt=" + endAt + ", vehicleMileage="
+				+ vehicleMileage + "]";
 	}
 }

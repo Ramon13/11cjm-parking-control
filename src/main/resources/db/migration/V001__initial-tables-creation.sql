@@ -41,12 +41,14 @@ CREATE TABLE  `parking_ticket`(
   `start_at`              DATETIME(3) NOT NULL,
   `end_at`                DATETIME(3) NULL,
   `driver_cpf`            VARCHAR(11) NOT NULL,
-  `guard_id`              BIGINT NOT NULL,
+  `opened_guard_id`       BIGINT NOT NULL,
+  `closed_guard_id`       BIGINT,
   `vehicle_plate`         VARCHAR(7) NOT NULL,
   `vehicle_mileage`       INT NOT NULL,
   
   PRIMARY KEY(`id`),
   CONSTRAINT `FK_PARKINGTICKET_DRIVER` FOREIGN KEY (`driver_cpf`) REFERENCES `driver` (`cpf`),
-  CONSTRAINT `FK_PARKINGTICKET_GUARD` FOREIGN KEY (`guard_id`) REFERENCES `guard` (`id`),
+  CONSTRAINT `FK_PARKINGTICKET_OPENED_GUARD` FOREIGN KEY (`opened_guard_id`) REFERENCES `guard` (`id`),
+  CONSTRAINT `FK_PARKINGTICKET_CLOSED_GUARD` FOREIGN KEY (`closed_guard_id`) REFERENCES `guard` (`id`),
   CONSTRAINT `FK_PARKINGTICKET_VEHICLE` FOREIGN KEY (`vehicle_plate`) REFERENCES `vehicle` (`registration_plate`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4;

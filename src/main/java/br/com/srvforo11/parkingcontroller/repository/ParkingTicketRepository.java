@@ -19,8 +19,12 @@ public interface ParkingTicketRepository extends JpaRepository<ParkingTicket, Lo
 	
 	@Transactional
 	@Modifying(flushAutomatically = true, clearAutomatically = true)
-	@Query("UPDATE ParkingTicket pt SET pt.endAt = :endAt WHERE pt.id = :ticketId")
-	void closeTicket(@Param("endAt") OffsetDateTime endAt, @Param("ticketId") Long ticketId);
+	@Query("UPDATE ParkingTicket pt SET pt.endAt = :endAt, pt.closedBy.id = :guardId WHERE pt.id = :ticketId")
+	void closeTicket(
+		@Param("endAt") OffsetDateTime endAt, 
+		@Param("ticketId") Long ticketId,
+		@Param("guardId") Long guardId
+	);
 	
 	@Query("FROM ParkingTicket p WHERE p.vehicle.registrationPlate = :vehiclePlate")
 	Page<ParkingTicket> findLastByVehicleRegistrationPlate(

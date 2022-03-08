@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.srvforo11.parkingcontroller.domain.entity.Guard;
 import br.com.srvforo11.parkingcontroller.domain.entity.User;
+import br.com.srvforo11.parkingcontroller.exception.GuardNotFoundException;
+import br.com.srvforo11.parkingcontroller.exception.InvalidMileageException;
 import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
 import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
 import br.com.srvforo11.parkingcontroller.service.DriverService;
@@ -37,12 +40,15 @@ public class ParkingTicketController {
 	}
 	
 	@GetMapping("/list")
-	public String index(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO, Model model) {
+	public String index(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO, Model model, HttpSession session) {
+		User user = (User) session.getAttribute("loggedUser");
+		
 		model.addAttribute("tickets", parkingTicketService.list());
 		model.addAttribute("drivers", driverService.list());
 		model.addAttribute("vehicles", 
 				vehicleService.list().stream().map(v -> EntityMapper.fromEntityToDTO(v)).collect(Collectors.toList()));
 		model.addAttribute("parkingTicket", new ParkingTicketDTO());
+		model.addAttribute("isGuardUser", (user instanceof Guard));
 		return "ticket/index";
 	}
 	
@@ -51,13 +57,20 @@ public class ParkingTicketController {
 	public ResponseEntity save(@ModelAttribute("parkingTicket") ParkingTicketDTO parkingTicketDTO, HttpSession session) {
 		User user = (User) session.getAttribute("loggedUser");
 		
-		parkingTicketService.save(parkingTicketDTO, user.getId());
+		try {
+			parkingTicketService.save(parkingTicketDTO, user.getId());
+		} catch (InvalidMileageException | GuardNotFoundException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	@PostMapping("/close")
-	public String close(@RequestParam("ticketId") Long id) {
-		parkingTicketService.closeTicket(id);
+	public String close(@RequestParam("ticketId") Long id, HttpSession session) {
+		User user = (User) session.getAttribute("loggedUser");
+		
+		parkingTicketService.closeTicket(id, user.getId());
 		return "redirect:/ticket/list";
 	}
 }

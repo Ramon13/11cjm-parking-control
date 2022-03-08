@@ -11,18 +11,21 @@ public final class EntityMapper {
 		return new ParkingTicketDTO(
 				parkingTicket.getId(),
 				parkingTicket.getDriver(),
-				parkingTicket.getGuard(),
+				parkingTicket.getOpenedBy(),
+				parkingTicket.getClosedBy(),
 				parkingTicket.getVehicle(),
 				parkingTicket.getStartAt(),
 				parkingTicket.getEndAt(),
-				parkingTicket.getVehicleMileage());
+				parkingTicket.getVehicleMileage(),
+				null);
 	}
 	
 	public static ParkingTicket fromDTOToEntity(ParkingTicketDTO parkingTicketDTO) {
 		return new ParkingTicket(
 				parkingTicketDTO.getId(),
 				parkingTicketDTO.getDriver(),
-				parkingTicketDTO.getGuard(),
+				parkingTicketDTO.getOpenedBy(),
+				parkingTicketDTO.getClosedBy(),
 				parkingTicketDTO.getVehicle(),
 				parkingTicketDTO.getStartAt(),
 				parkingTicketDTO.getEndAt(),

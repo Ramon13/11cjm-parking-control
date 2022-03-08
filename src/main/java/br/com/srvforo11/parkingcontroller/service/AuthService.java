@@ -1,6 +1,7 @@
 package br.com.srvforo11.parkingcontroller.service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -26,7 +27,6 @@ public class AuthService {
 
 	public User login(String username, String password) throws UserNotFoundException{
 		User user = getUserOrElseThrow(username);
-		
 		if (SecurityUtils.matches(password, user.getPassword()) == Boolean.FALSE)
 			throw new UserNotFoundException("Password not matches" + password);
 		
@@ -48,11 +48,12 @@ public class AuthService {
 	
 	private User getUserOrElseThrow(String username) throws UserNotFoundException {
 		Objects.nonNull(username);
+		Optional<User> user = guardRepository.findByUsername(username);
 		
-		return guardRepository.findByUsername(username)
-				.orElse(
-					supervisorRepository.findByUsername(username)
-					.orElseThrow(() -> new UserNotFoundException("user not found:" + username))
-				);
+		if (user.isPresent())
+			return user.get();
+				
+		return supervisorRepository.findByUsername(username)
+					.orElseThrow(() -> new UserNotFoundException("user not found:" + username));			
 	}
 }

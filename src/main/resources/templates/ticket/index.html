@@ -37,9 +37,9 @@
               <option th:each="vehicle : ${vehicles}" th:text="${vehicle.vehicleInfo}" th:value="${vehicle.registrationPlate}"></option>    
             </select>
             <p>Quilometragem (km)</p>
-            <input type="text" placeholder="quilometragem atual do veículo..." th:field="*{vehicleMileage}"/>
+            <input type="text" placeholder="quilometragem atual do veículo (somente números)" th:field="*{vehicleMileage}"/>
             
-            <button type="button" id="saveTicket">Salvar</button>
+            <button type="button" id="saveTicket">Abrir</button>
           </form>
           
           <br /><br />
@@ -48,7 +48,7 @@
     </div>
     
     <div id="content">
-      <div id="newTicket">
+      <div id="newTicket" th:if="${isGuardUser}">
         <div>
           <button id="newTicketBtn">
             <img th:src="@{/images/plus.svg}"/>
@@ -57,13 +57,16 @@
       </div>
     
       <div th:each="ticket : ${tickets}" class="parking-record" th:classappend="${ticket.ticketStatus}">
+        <div class="ticket-id">
+          <span th:text="${ticket.prettyPrintTicketId}"></span>
+        </div>
         <div class="record-head">
           <div class="guard-info">
             <div class="guard-icon">
               <img src="../images/guard.png"/>
             </div>
             <div class="guard-name">
-              <p th:text="${ticket.guard.name}"></p>
+              <p th:text="${ticket.openedBy.name}"></p>
             </div>
             <div class="ticket-start time-content">
               <p th:text="${ticket.printDepartureTime}"></p>
@@ -82,7 +85,10 @@
         <div class="record-body">
           <div class="ticket-content">
             <p th:text="${ticket.vehicleInfo}"></p>
+            <p class="vehicle-mileage" th:text="${ticket.printVehicleMileage()}"></p>
+            <br />
             <p class="timer" th:if="${ticket.endAt == null}" th:attr="data-ticketstart=${ticket.startAt}"></p>
+
             <br/>
             <div th:if="${ticket.endAt != null}" class="time-content">
               <p th:text="${ticket.printEntranceTime}"></p>
@@ -91,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="record-option" th:if="${ticket.endAt == null}">
+        <div class="record-option" th:if="${ticket.endAt == null and isGuardUser}">
           <button class="close-ticket" title="finalizar registro" 
             th:attr="data-url=@{/ticket/close(ticketId=${ticket.id})}">
             <img th:src="@{/images/check.svg}"/>
@@ -153,6 +159,16 @@
   	    saveNewTicket(saveTicketForm);
   	  }
       
+      const formInputs = saveTicketForm.querySelectorAll("input");
+      for (let i = 0; i < formInputs.length; i++){
+    	  formInputs[i].addEventListener("keydown", function(event){
+    		  if (event.keyCode === 13 || event.which === 13) {
+            event.preventDefault();
+            saveNewTicket(saveTicketForm);
+          }
+    	  });
+      }
+      
       function saveNewTicket(ticketForm){
     	  let formData = new FormData(ticketForm);
     	  let httpRequest = new XMLHttpRequest();
@@ -168,14 +184,16 @@
       }
       
       function ticketResponse(httpRequest){
-    	  if (httpRequest.readyState === XMLHttpRequest.DONE) {
-  	      if (httpRequest.status === 201) {
-  	        console.log("ticket criado");
-  	        location.reload();
-  	      } else {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+          if (httpRequest.status === 201) {
+	        console.log("ticket criado");
+	        location.reload();
+	      } else if (httpRequest.status === 422) {
+	    	alert(httpRequest.responseText);
+	      } else {
   	        console.log('There was a problem with the request.');
   	      }
-  	    }
+    	}
       }
       
       function closeTicket(url){
