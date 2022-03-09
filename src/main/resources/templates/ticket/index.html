@@ -87,6 +87,7 @@
             <p th:text="${ticket.vehicleInfo}"></p>
             <p class="vehicle-mileage" th:text="${ticket.printVehicleMileage()}"></p>
             <br />
+            <br />
             <p class="timer" th:if="${ticket.endAt == null}" th:attr="data-ticketstart=${ticket.startAt}"></p>
 
             <br/>
@@ -117,7 +118,7 @@
     		    let delta = Math.floor((Date.now() - start) / 1000);
     		    let ss = delta % 60;
     		    let mm = Math.floor(delta/60) % 60;
-    		    let hh = Math.floor(delta/60/60) % 60;
+    		    let hh = Math.floor(delta/60/60);
     		    timer.textContent = 
     		    	((hh < 10) ? "0" + hh : hh) 
     		    	+ ":" + 

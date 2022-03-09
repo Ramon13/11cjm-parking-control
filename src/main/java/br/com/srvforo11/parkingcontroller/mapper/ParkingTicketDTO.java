@@ -1,13 +1,12 @@
 package br.com.srvforo11.parkingcontroller.mapper;
 
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.util.Objects;
-
 import br.com.srvforo11.parkingcontroller.domain.entity.Driver;
 import br.com.srvforo11.parkingcontroller.domain.entity.Guard;
 import br.com.srvforo11.parkingcontroller.domain.entity.Vehicle;
 import br.com.srvforo11.parkingcontroller.util.DateUtils;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 public class ParkingTicketDTO {
 
@@ -136,7 +135,8 @@ public class ParkingTicketDTO {
 	}
 	
 	public String getTicketDuration() {
-		return String.format("Duração: %d minutos", Duration.between(startAt, endAt).toMinutes());
+		Duration duration = Duration.between(startAt, endAt);
+		return String.format("Duração: %02dh : %02dm", duration.toHours(), duration.toMinutesPart());
 	}
 	
 	public String getDriveDistance() {
