@@ -107,7 +107,13 @@
       </div>
     </div>
     
-    <script>
+    <script th:inline="javascript">
+      const updateEndpoint = '[(@{/ticket/update/listener})]';
+      console.log(updateEndpoint)
+      setInterval(function(){
+    	  checkForUpdates(updateEndpoint);
+      }, 4000);
+    
       const parkingRecords = document.querySelectorAll("div.openTicket");
       for (let i = 0; i < parkingRecords.length; i++){
     	  let timer = parkingRecords[i].querySelector("p.timer");
@@ -205,6 +211,24 @@
     	  
     	  form.submit();
       }
+     
+      
+   // Open and send an asynchronous xmlHttpRequest. If the server response is 
+   // HTTP.OK (200) then call successFunction, else call errorFunction.
+   function checkForUpdates(endpoint){
+     
+     let httpRequest = new XMLHttpRequest();
+     
+     httpRequest.onreadystatechange = function(){
+       if (httpRequest.readyState === XMLHttpRequest.DONE){
+         if (httpRequest.status === 200)
+           console.log("request success");
+       } 
+     }
+     
+     httpRequest.open('GET', endpoint, true);
+     httpRequest.send();
+   }
     </script>
   </body>
 </html> 
