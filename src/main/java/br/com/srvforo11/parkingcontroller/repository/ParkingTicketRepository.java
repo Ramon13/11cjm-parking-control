@@ -28,6 +28,6 @@ public interface ParkingTicketRepository extends JpaRepository<ParkingTicket, Lo
 	Page<ParkingTicket> findLastByVehicleRegistrationPlate(
 			@Param("vehiclePlate") String registrationPlate, Pageable pageable);
 	
-	@Query("FROM ParkingTicket p WHERE p.startAt > :date OR p.endAt > :date")
-	List<ParkingTicket> findStartAtOrEndAtAfter(@Param("date") OffsetDateTime date);
+	@Query("SELECT COUNT(p) FROM ParkingTicket p WHERE p.startAt > :lastCheckDate OR p.endAt > :lastCheckDate")
+	Long findStartAtOrEndAtAfter(@Param("lastCheckDate") OffsetDateTime lastCheckDate);
 }

@@ -1,18 +1,10 @@
 package br.com.srvforo11.parkingcontroller.infrastructure.controller;
 
-import br.com.srvforo11.parkingcontroller.domain.entity.Guard;
-import br.com.srvforo11.parkingcontroller.domain.entity.User;
-import br.com.srvforo11.parkingcontroller.exception.GuardNotFoundException;
-import br.com.srvforo11.parkingcontroller.exception.InvalidMileageException;
-import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
-import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
-import br.com.srvforo11.parkingcontroller.service.DriverService;
-import br.com.srvforo11.parkingcontroller.service.ParkingTicketService;
-import br.com.srvforo11.parkingcontroller.service.VehicleService;
-import br.com.srvforo11.parkingcontroller.util.DateUtils;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import br.com.srvforo11.parkingcontroller.domain.entity.Guard;
+import br.com.srvforo11.parkingcontroller.domain.entity.User;
+import br.com.srvforo11.parkingcontroller.exception.GuardNotFoundException;
+import br.com.srvforo11.parkingcontroller.exception.InvalidMileageException;
+import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
+import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
+import br.com.srvforo11.parkingcontroller.service.DriverService;
+import br.com.srvforo11.parkingcontroller.service.ParkingTicketService;
+import br.com.srvforo11.parkingcontroller.service.VehicleService;
 
 @Controller
 @RequestMapping("/ticket")
@@ -41,8 +43,8 @@ public class ParkingTicketController {
 	}
 	
 	@ModelAttribute("lastCheck")
-	public OffsetDateTime initLastCheck() {
-		return DateUtils.now();
+	public LocalDateTime initLastCheck() {
+		return LocalDateTime.now();
 	}
 	
 	@GetMapping("/list")
@@ -81,9 +83,9 @@ public class ParkingTicketController {
 	}
 	
 	@GetMapping("/update/listener")
-	public ResponseEntity<String> ticketChanged(@ModelAttribute("lastCheck") OffsetDateTime lastCheck, Model model){
+	public ResponseEntity<String> ticketChanged(@ModelAttribute("lastCheck") LocalDateTime lastCheck, Model model){
 		if ( parkingTicketService.checkUpdateTicket(lastCheck) ) {
-			model.addAttribute("lastCheck", DateUtils.now());
+			model.addAttribute("lastCheck", LocalDateTime.now());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 		

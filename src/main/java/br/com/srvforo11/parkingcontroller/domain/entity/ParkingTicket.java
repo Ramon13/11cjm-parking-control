@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 import br.com.srvforo11.parkingcontroller.util.DateUtils;
 
 @Entity

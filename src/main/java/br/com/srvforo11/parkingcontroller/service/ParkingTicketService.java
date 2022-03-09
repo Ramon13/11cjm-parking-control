@@ -1,5 +1,22 @@
 package br.com.srvforo11.parkingcontroller.service;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.stereotype.Service;
+
 import br.com.srvforo11.parkingcontroller.domain.entity.ParkingTicket;
 import br.com.srvforo11.parkingcontroller.domain.entity.Vehicle;
 import br.com.srvforo11.parkingcontroller.exception.GuardNotFoundException;
@@ -8,19 +25,6 @@ import br.com.srvforo11.parkingcontroller.mapper.EntityMapper;
 import br.com.srvforo11.parkingcontroller.mapper.ParkingTicketDTO;
 import br.com.srvforo11.parkingcontroller.repository.ParkingTicketRepository;
 import br.com.srvforo11.parkingcontroller.util.DateUtils;
-import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.transaction.Transactional;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ParkingTicketService {
@@ -75,7 +79,8 @@ public class ParkingTicketService {
 			throw new InvalidMileageException("A quilometragem atual não pode ser menor do que a última quilometragem registrada.");
 	}
 	
-	public boolean checkUpdateTicket(OffsetDateTime lastCheck) {
-		return !parkingTicketRepository.findStartAtOrEndAtAfter(lastCheck).isEmpty();
+	public boolean checkUpdateTicket(LocalDateTime lastCheck) {
+		Long countResults = parkingTicketRepository.findStartAtOrEndAtAfter(OffsetDateTime.of(lastCheck, DateUtils.DEFAULT_TIMEZONE));
+		return ( countResults > 0 );
 	}
 }
