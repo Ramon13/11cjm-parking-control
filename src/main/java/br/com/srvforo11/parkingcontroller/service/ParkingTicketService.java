@@ -14,7 +14,6 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import br.com.srvforo11.parkingcontroller.domain.entity.ParkingTicket;
@@ -38,7 +37,9 @@ public class ParkingTicketService {
 	}
 	
 	public List<ParkingTicketDTO> list(){
-		List<ParkingTicketDTO> tickets = parkingTicketRepository.findAll(Sort.by(Order.desc("id")))
+		PageRequest pageRequest = PageRequest.of(0, 1000, Direction.ASC, "endAt");
+		
+		List<ParkingTicketDTO> tickets = parkingTicketRepository.findAll(pageRequest)
 				.stream().map(ticket -> EntityMapper.fromEntityToDTO(ticket)).collect(Collectors.toList());
 		
 		setDistances(tickets);
