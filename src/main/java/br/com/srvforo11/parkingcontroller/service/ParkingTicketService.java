@@ -56,10 +56,12 @@ public class ParkingTicketService {
 		for (ParkingTicketDTO ticket : tickets) {
 			mileage = vehicleMapMileage.get(ticket.getVehicle());
 			
-			if ( !Objects.isNull(mileage) && !Objects.isNull(ticket.getVehicleMileage()) )	
-				ticket.setDistance(Math.round(mileage - ticket.getVehicleMileage()));
-			
-			vehicleMapMileage.put(ticket.getVehicle(), ticket.getVehicleMileage());
+			if ( !Objects.isNull(ticket.getVehicleMileage()) ) {
+				if ( !Objects.isNull(mileage))	
+					ticket.setDistance(Math.round(mileage - ticket.getVehicleMileage()));
+				
+				vehicleMapMileage.put(ticket.getVehicle(), ticket.getVehicleMileage());
+			}
 		}
 	}
 	

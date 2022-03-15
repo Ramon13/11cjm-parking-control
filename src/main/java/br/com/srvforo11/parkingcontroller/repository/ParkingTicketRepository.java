@@ -27,7 +27,7 @@ public interface ParkingTicketRepository extends JpaRepository<ParkingTicket, Lo
 		@Param("guardId") Long guardId
 	);
 	
-	@Query("FROM ParkingTicket p WHERE p.vehicle.registrationPlate = :vehiclePlate")
+	@Query("FROM ParkingTicket p WHERE p.vehicle.registrationPlate = :vehiclePlate AND p.vehicleMileage != null")
 	Page<ParkingTicket> findLastByVehicleRegistrationPlate(
 			@Param("vehiclePlate") String registrationPlate, Pageable pageable);
 	

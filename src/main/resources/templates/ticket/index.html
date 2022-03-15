@@ -111,7 +111,7 @@
       const updateEndpoint = '[(@{/ticket/update/listener})]';
       setInterval(function(){
     	  checkForUpdates(updateEndpoint);
-      }, 7000);
+      }, 30000);
     
       const parkingRecords = document.querySelectorAll("div.openTicket");
       for (let i = 0; i < parkingRecords.length; i++){
