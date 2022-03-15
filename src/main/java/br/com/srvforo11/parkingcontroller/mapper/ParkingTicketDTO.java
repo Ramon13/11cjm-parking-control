@@ -131,6 +131,9 @@ public class ParkingTicketDTO {
 	}
 	
 	public String printVehicleMileage() {
+		if (Objects.isNull(vehicleMileage))
+			return "";
+		
 		return String.format("%s Km", vehicleMileage);
 	}
 	

@@ -1,6 +1,7 @@
 package br.com.srvforo11.parkingcontroller.repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -35,4 +36,10 @@ public interface ParkingTicketRepository extends JpaRepository<ParkingTicket, Lo
 	
 	@Query("FROM ParkingTicket p")
 	Page<ParkingTicket> findAll(Pageable pageable);
+	
+	@Query("FROM ParkingTicket p WHERE p.endAt != null ORDER BY p.id DESC")
+	List<ParkingTicket> findAllFinished();
+	
+	@Query("FROM ParkingTicket p WHERE p.endAt = null ORDER BY p.id DESC")
+	List<ParkingTicket> findAllUnfinished();
 }

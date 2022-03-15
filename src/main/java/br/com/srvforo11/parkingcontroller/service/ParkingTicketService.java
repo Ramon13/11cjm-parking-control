@@ -2,6 +2,7 @@ package br.com.srvforo11.parkingcontroller.service;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +38,13 @@ public class ParkingTicketService {
 	}
 	
 	public List<ParkingTicketDTO> list(){
-		PageRequest pageRequest = PageRequest.of(0, 1000, Direction.ASC, "endAt");
+		List<ParkingTicketDTO> tickets = new ArrayList<>();
 		
-		List<ParkingTicketDTO> tickets = parkingTicketRepository.findAll(pageRequest)
-				.stream().map(ticket -> EntityMapper.fromEntityToDTO(ticket)).collect(Collectors.toList());
+		tickets.addAll(parkingTicketRepository.findAllUnfinished()
+			.stream().map(ticket -> EntityMapper.fromEntityToDTO(ticket)).collect(Collectors.toList()) );
+		
+		tickets.addAll(parkingTicketRepository.findAllFinished()
+				.stream().map(ticket -> EntityMapper.fromEntityToDTO(ticket)).collect(Collectors.toList()) );
 		
 		setDistances(tickets);
 		return tickets;
@@ -52,7 +56,7 @@ public class ParkingTicketService {
 		for (ParkingTicketDTO ticket : tickets) {
 			mileage = vehicleMapMileage.get(ticket.getVehicle());
 			
-			if (!Objects.isNull(mileage))	
+			if ( !Objects.isNull(mileage) && !Objects.isNull(ticket.getVehicleMileage()) )	
 				ticket.setDistance(Math.round(mileage - ticket.getVehicleMileage()));
 			
 			vehicleMapMileage.put(ticket.getVehicle(), ticket.getVehicleMileage());
@@ -73,10 +77,14 @@ public class ParkingTicketService {
 	}
 	
 	private void validateVehicleMileage(Integer mileage, String registrationPlate) throws InvalidMileageException {
-		PageRequest pageable = PageRequest.of(0, 1, Sort.by(Direction.DESC, "id"));
-		Optional<ParkingTicket> pt = parkingTicketRepository.findLastByVehicleRegistrationPlate(registrationPlate, pageable).stream().findFirst();
+		if (Objects.isNull(mileage))
+			return;
 		
-		if (pt.isPresent() && mileage <= pt.get().getVehicleMileage())
+		PageRequest pageable = PageRequest.of(0, 1, Sort.by(Direction.DESC, "id"));
+		Optional<ParkingTicket> parkingTicket = 
+				parkingTicketRepository.findLastByVehicleRegistrationPlate(registrationPlate, pageable).stream().findFirst();
+		
+		if (parkingTicket.isPresent() && mileage <= parkingTicket.get().getVehicleMileage())
 			throw new InvalidMileageException("A quilometragem atual não pode ser menor do que a última quilometragem registrada.");
 	}
 	
