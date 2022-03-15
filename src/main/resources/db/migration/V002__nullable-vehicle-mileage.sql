@@ -1,0 +1,1 @@
+ALTER TABLE `parking_ticket` MODIFY `vehicle_mileage` INT NULL; 

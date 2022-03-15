@@ -45,7 +45,7 @@ public class ParkingTicket {
 	@Column(name = "end_at")
 	private OffsetDateTime endAt;
 	
-	@Column(name = "vehicle_mileage", nullable = false)
+	@Column(name = "vehicle_mileage", nullable = true)
 	private Integer vehicleMileage;
 	
 	public ParkingTicket(Long id, Driver driver, Guard openedBy, Guard closedBy, Vehicle vehicle,
